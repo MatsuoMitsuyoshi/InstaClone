@@ -164,11 +164,14 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             guard let profileImg = self.plusPhotoBtn.imageView?.image else { return }
 
             // upload data
-            guard let uploadData = UIImageJPEGRepresentation(profileImg, 0.3) else { return }
+            guard let uploadData = profileImg.jpegData(compressionQuality: 0.3) else { return }
 
             // place image in firebase storage
             let filename = NSUUID().uuidString
-            Storage.storage().reference().child("profile_images").putData(uploadData, metadata: nil, completion: {(metadata, error) in
+            // UPDATE: - In order to get download URL must add filename to storage ref like this
+            let storageRef = Storage.storage().reference().child("profile_images").child(filename)
+            
+            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
 
                 // handle error
                 if let error = error {
@@ -176,31 +179,33 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 }
 
                 // profile image url
-                guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+                // UPDATE: - Firebase 5 must now retrieve download url
+                storageRef.downloadURL(completion: { (downloadURL, error) in
+                    guard let profileImageURL = downloadURL?.absoluteString else {
+                        print("DEBUG: Profile image url is nil")
+                        return
+                    }
 
+                    // user id
+                    guard let uid = authResult?.user.uid else { return }
 
-                //
-                guard let uid = user?.uid else { return }
+                    let dictionaryValues = ["name": fullName,
+                                            "username": username,
+                                            "profileImageUrl": profileImageURL]
 
-                let dictionaryValues = ["name": fullName,
-                                        "username": username,
-                                        "profileImageUrl": profileImageURL]
+                    let values = [uid: dictionaryValues]
 
-                let values = [uid: dictionaryValues]
+                    // save user info dagtabase
+                    Database.database().reference().child("users").updateChildValues(dictionaryValues, withCompletionBlock: { (error, ref) in
 
-                // save user info dagtabase
-                Database.database().reference().child("users").updateChildValues(dictionaryValues, withCompletionBlock: { (error, ref) in
+                        print("Successfuly created user and saved information to database")
 
-                    print("Successfuly created user and saved information to database")
-
+                    })
                 })
             })
         }
     }
 
-    
-    
-    
     @objc func formValidation() {
         
         guard
