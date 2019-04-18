@@ -104,7 +104,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     // MARK: - UIImagePickerController
     
-    /// function that handles selecting image from camera roll
+    // function that handles selecting image from camera roll
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         // selected image
