@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 class UserProfileHeader: UICollectionViewCell {
 
@@ -16,19 +15,12 @@ class UserProfileHeader: UICollectionViewCell {
     var user: User? {
         
         didSet {
-            
-            // configure edit profile button
-//            configureEditProfileFollowButton()
-            
-            // set user stats
-//            setUserStats(for: user)
-            
             let fullName = user?.name
             nameLabel.text = fullName
             
-//            guard let profileImageUrl = user?.profileImageUrl else { return }
-//
-//            profileImageView.loadImage(with: profileImageUrl)
+            guard let profileImageUrl = user?.profileImageUrl else { return }
+            
+            profileImageView.loadImage(with: profileImageUrl)
         }
     }
     
