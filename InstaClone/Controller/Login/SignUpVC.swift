@@ -176,6 +176,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                 // handle error
                 if let error = error {
                     print("Failed to upload imgae to Firebase Storage with error", error.localizedDescription)
+                    return
                 }
 
                 // profile image url
@@ -196,7 +197,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                     let values = [uid: dictionaryValues]
 
                     // save user info dagtabase
-                    Database.database().reference().child("users").updateChildValues(dictionaryValues, withCompletionBlock: { (error, ref) in
+                    Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
 
                         print("Successfuly created user and saved information to database")
 

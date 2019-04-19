@@ -22,6 +22,7 @@
 		0906A786226844FA006E4EA4 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A785226844FA006E4EA4 /* NotificationsVC.swift */; };
 		0906A78822684538006E4EA4 /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A78722684538006E4EA4 /* UserProfileVC.swift */; };
 		0906A79422687246006E4EA4 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A79322687246006E4EA4 /* UserProfileHeader.swift */; };
+		0906A796226888E2006E4EA4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906A795226888E2006E4EA4 /* User.swift */; };
 		D4ECB12B561E11C716B0D930 /* Pods_InstaClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2647FEFAD74424A9BCFBACA /* Pods_InstaClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		0906A785226844FA006E4EA4 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		0906A78722684538006E4EA4 /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
 		0906A79322687246006E4EA4 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		0906A795226888E2006E4EA4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9E6ABE960EEDD040B69ABAFD /* Pods-InstaClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaClone.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstaClone/Pods-InstaClone.release.xcconfig"; sourceTree = "<group>"; };
 		CCE63AC7E55296CD7F2C2DC6 /* Pods-InstaClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaClone/Pods-InstaClone.debug.xcconfig"; sourceTree = "<group>"; };
 		E2647FEFAD74424A9BCFBACA /* Pods_InstaClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstaClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +108,7 @@
 		0906A76A2266DC3A006E4EA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0906A79322687246006E4EA4 /* UserProfileHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -113,6 +116,7 @@
 		0906A76C2266DC49006E4EA4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0906A795226888E2006E4EA4 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -184,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				0906A78722684538006E4EA4 /* UserProfileVC.swift */,
-				0906A79322687246006E4EA4 /* UserProfileHeader.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				0906A78222684479006E4EA4 /* FeedVC.swift in Sources */,
 				0906A7742267429D006E4EA4 /* SignUpVC.swift in Sources */,
 				0906A76F2266DD1C006E4EA4 /* LoginVC.swift in Sources */,
+				0906A796226888E2006E4EA4 /* User.swift in Sources */,
 				0906A7722266E0A6006E4EA4 /* Extensions.swift in Sources */,
 				0906A77A22684065006E4EA4 /* MainTabVC.swift in Sources */,
 				0906A7592266DB79006E4EA4 /* AppDelegate.swift in Sources */,
