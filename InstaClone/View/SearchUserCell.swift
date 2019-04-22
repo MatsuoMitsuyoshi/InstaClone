@@ -25,6 +25,7 @@ class SearchUserCell: UITableViewCell {
             self.textLabel?.text = username
             
             self.detailTextLabel?.text = fullName
+            
         }
     }
     

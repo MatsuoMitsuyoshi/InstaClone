@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class UserProfileHeader: UICollectionViewCell {
 
@@ -15,12 +16,18 @@ class UserProfileHeader: UICollectionViewCell {
     var user: User? {
         
         didSet {
+            
+            // configure edit profile button
+            configureEditProfileFollowButton()
+            
             let fullName = user?.name
             nameLabel.text = fullName
             
             guard let profileImageUrl = user?.profileImageUrl else { return }
             
             profileImageView.loadImage(with: profileImageUrl)
+            
+            print("User Profie Header did set")
         }
     }
     
@@ -85,7 +92,7 @@ class UserProfileHeader: UICollectionViewCell {
     
     lazy var editProfileFollowButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Edit Profile", for: .normal)
+        button.setTitle("Loading", for: .normal)
         button.layer.cornerRadius = 3
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 0.5
@@ -185,6 +192,30 @@ class UserProfileHeader: UICollectionViewCell {
         
     }
     
-    
-    
+    func configureEditProfileFollowButton() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        guard let user = self.user else { return }
+        
+        if currentUid == user.uid {
+            
+            // configure button as edit profile
+            editProfileFollowButton.setTitle("Edit Profile", for: .normal)
+            
+        } else {
+            
+            // configure button as follow button
+            editProfileFollowButton.setTitle("Follow", for: .normal)
+            editProfileFollowButton.setTitleColor(.white, for: .normal)
+            editProfileFollowButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+
+//            user.checkIfUserIsFollowed(completion: { (followed) in
+//
+//                if followed {
+//                    self.editProfileFollowButton.setTitle("Following", for: .normal)
+//                } else {
+//                    self.editProfileFollowButton.setTitle("Follow", for: .normal)
+//                }
+//            })
+        }
+    }
 }

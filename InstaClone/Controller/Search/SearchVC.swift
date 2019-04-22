@@ -22,9 +22,14 @@ class SearchVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("SearchVC")
+        
         // register cell classes
         tableView.register(SearchUserCell.self, forCellReuseIdentifier: reuseIdentifier)
         
+        // UPDATE: - remove separators
+        tableView.separatorStyle = .none
+
         // separator insets
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 0)
         
@@ -55,6 +60,16 @@ class SearchVC: UITableViewController {
         let user = users[indexPath.row]
         
         print("Username is \(user.username)")
+        
+        // create instance of user profile vc
+        let userProfileVC = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        // passes user from searchVC to userProfileVC
+        userProfileVC.userToLoadFromSearchVC = user
+        
+        // push view controller
+        navigationController?.pushViewController(userProfileVC, animated: true)
+        print("push view userProfileVC")
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
