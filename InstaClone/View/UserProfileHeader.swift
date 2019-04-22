@@ -20,6 +20,9 @@ class UserProfileHeader: UICollectionViewCell {
             // configure edit profile button
             configureEditProfileFollowButton()
             
+            // set user stats
+            setUserStats(for: user)
+            
             let fullName = user?.name
             nameLabel.text = fullName
             
@@ -60,9 +63,9 @@ class UserProfileHeader: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         
-        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
-        label.attributedText = attributedText
+//        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+//        attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+//        label.attributedText = attributedText
         
         // add gesture recognizer
 //        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowersTapped))
@@ -78,9 +81,9 @@ class UserProfileHeader: UICollectionViewCell {
         label.numberOfLines = 0
         label.textAlignment = .center
         
-        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
-        label.attributedText = attributedText
+//        let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+//        attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+//        label.attributedText = attributedText
         
         // add gesture recognizer
 //        let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowingTapped))
@@ -145,15 +148,29 @@ class UserProfileHeader: UICollectionViewCell {
 
     }
     
-
-    
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
     // MARK: - Handlers
+    
+    @objc func handleEditProfileFollow() {
+        guard let user = self.user else { return }
+        
+        if editProfileFollowButton.titleLabel?.text == "Edit Profile" {
+            print("Handle edit profile")
+        } else {
+            
+            if editProfileFollowButton.titleLabel?.text == "Follow" {
+                editProfileFollowButton.setTitle("Following", for: .normal)
+                user.follow()
+            } else {
+                editProfileFollowButton.setTitle("Follow", for: .normal)
+                user.unfollow()
+            }
+        }
+    }
     
     func configureBottomToolBar() {
         
@@ -192,7 +209,48 @@ class UserProfileHeader: UICollectionViewCell {
         
     }
     
+    func setUserStats(for user: User?) {
+        
+        guard let uid = user?.uid else { return }
+        
+        var numberOfFollowers: Int!
+        var numberOfFollowing: Int!
+        
+        // get number of followers
+        USER_FOLLOWER_REF.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let snapshot = snapshot.value as? Dictionary<String, AnyObject> {
+                numberOfFollowers = snapshot.count
+            } else {
+                numberOfFollowers = 0
+            }
+            
+            let attributedText = NSMutableAttributedString(string: "\(numberOfFollowers!)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+            attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+            
+            self.followersLabel.attributedText = attributedText
+
+        }
+        
+        // get number of following
+        USER_FOLLOWING_REF.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let snapshot = snapshot.value as? Dictionary<String, AnyObject> {
+                numberOfFollowing = snapshot.count
+            } else {
+                numberOfFollowing = 0
+            }
+            
+            let attributedText = NSMutableAttributedString(string: "\(numberOfFollowing!)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+            attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+            
+            self.followingLabel.attributedText = attributedText
+        }
+        
+    }
+    
     func configureEditProfileFollowButton() {
+        
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         guard let user = self.user else { return }
         
@@ -204,18 +262,17 @@ class UserProfileHeader: UICollectionViewCell {
         } else {
             
             // configure button as follow button
-            editProfileFollowButton.setTitle("Follow", for: .normal)
             editProfileFollowButton.setTitleColor(.white, for: .normal)
             editProfileFollowButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
 
-//            user.checkIfUserIsFollowed(completion: { (followed) in
-//
-//                if followed {
-//                    self.editProfileFollowButton.setTitle("Following", for: .normal)
-//                } else {
-//                    self.editProfileFollowButton.setTitle("Follow", for: .normal)
-//                }
-//            })
+            user.checkIfUserIsFollowed(completion: { (followed) in
+
+                if followed {
+                    self.editProfileFollowButton.setTitle("Following", for: .normal)
+                } else {
+                    self.editProfileFollowButton.setTitle("Follow", for: .normal)
+                }
+            })
         }
     }
 }
