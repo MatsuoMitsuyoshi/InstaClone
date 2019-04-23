@@ -32,7 +32,7 @@ class UserProfileHeader: UICollectionViewCell {
             
             profileImageView.loadImage(with: profileImageUrl)
             
-            print("User Profie Header did set")
+//            print("User Profie Header did set")
         }
     }
     

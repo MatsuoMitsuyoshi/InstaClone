@@ -77,7 +77,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     // MARK: - UserProfileHeader Protocol
     
     func handleFollowersTapped(for header: UserProfileHeader) {
-        print("Handle followers tapped")
+//        print("Handle followers tapped")
 
         let followVC = FollowVC()
         followVC.viewFollowers = true
@@ -88,7 +88,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     }
     
     func handleFollowingTapped(for header: UserProfileHeader) {
-        print("Handle following tapped")
+//        print("Handle following tapped")
 
         let followVC = FollowVC()
         followVC.viewFollowing = true
@@ -100,7 +100,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     func handleEditFollowTapped(for header: UserProfileHeader) {
         
-        print("Handle edit follow tapped..")
+//        print("Handle edit follow tapped..")
         
         guard let user = header.user else { return }
 
@@ -121,7 +121,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     func setUserStats(for header: UserProfileHeader) {
         
-        print("Handle set user stats..")
+//        print("Handle set user stats..")
         
         guard let uid = header.user?.uid else { return }
         

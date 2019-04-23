@@ -22,7 +22,7 @@ class SearchVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("SearchVC")
+//        print("SearchVC")
         
         // register cell classes
         tableView.register(SearchUserCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -59,7 +59,7 @@ class SearchVC: UITableViewController {
         
         let user = users[indexPath.row]
         
-        print("Username is \(user.username)")
+//        print("Username is \(user.username)")
         
         // create instance of user profile vc
         let userProfileVC = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
@@ -69,7 +69,7 @@ class SearchVC: UITableViewController {
         
         // push view controller
         navigationController?.pushViewController(userProfileVC, animated: true)
-        print("push view userProfileVC")
+//        print("push view userProfileVC")
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,18 +95,12 @@ class SearchVC: UITableViewController {
             // uid
             let uid = snapshot.key
             
-            // snapshot value cast as dictionary
-            guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else { return }
-            
-            // construct user
-            let user = User(uid: uid, dictionary: dictionary)
-            
-            // append
-            self.users.append(user)
-            
-            // reload our table view
-            self.tableView.reloadData()
-            
+            Database.fetchUser(with: uid, completion: { (user) in
+                
+                self.users.append(user)
+                
+                self.tableView.reloadData()
+            })
         }
     }
 }
