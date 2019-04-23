@@ -42,7 +42,7 @@ class MainTabVC: UITabBarController, UITabBarControllerDelegate {
         // search feed controller
         let searchVC = constructNavController(unselectedImage: #imageLiteral(resourceName: "search_unselected"), selectedImage: #imageLiteral(resourceName: "search_selected"), rootViewController: SearchVC())
         
-        // post controller
+        // select image controller
         let selectImageVC = constructNavController(unselectedImage: #imageLiteral(resourceName: "plus_unselected"), selectedImage: #imageLiteral(resourceName: "plus_unselected"))
         
         // notification controller
@@ -57,6 +57,22 @@ class MainTabVC: UITabBarController, UITabBarControllerDelegate {
         // tab bar tint color
         tabBar.tintColor = .black
         
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let index = viewControllers?.index(of: viewController)
+        
+        if index == 2 {
+            
+            let selectImageVC = SelectImageVC(collectionViewLayout: UICollectionViewFlowLayout())
+            let navController = UINavigationController(rootViewController: selectImageVC)
+            navController.navigationBar.tintColor = .black
+            
+            present(navController, animated: true, completion: nil)
+            
+            return false
+        }
+        return true
     }
     
     /// construct navigation controllers
