@@ -16,8 +16,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     // MARK: - Properties
     
-    var currentUser: User?
-    var userToLoadFromSearchVC: User?
+    var user: User?
 
     // MARK: - Init
     
@@ -32,12 +31,8 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         self.collectionView?.backgroundColor = .white
         
         // fetch user data
-        if userToLoadFromSearchVC == nil {
+        if self.user == nil {
             fetchCurrentUserData()
-        }
-        
-        if let userToLoadFromSearchVC = self.userToLoadFromSearchVC {
-            print("Username from previous controller is \(userToLoadFromSearchVC.username)")
         }
     }
 
@@ -66,13 +61,9 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         
         // set the user in header
-        if let user = self.currentUser {
-            header.user = user
-        } else if let userToLoadFromSearchVC = self.userToLoadFromSearchVC {
-            header.user = userToLoadFromSearchVC
-            navigationItem.title = userToLoadFromSearchVC.username
-        }
-
+        header.user = self.user
+        navigationItem.title = user?.username
+    
         // return header
         return header
     }
@@ -92,7 +83,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         followVC.viewFollowers = true
 //        let followVC = FollowLikeVC()
 //        followVC.viewingMode = FollowLikeVC.ViewingMode(index: 1)
-//        followVC.uid = user?.uid
+        followVC.uid = user?.uid
         navigationController?.pushViewController(followVC, animated: true)
     }
     
@@ -103,7 +94,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         followVC.viewFollowing = true
 //        let followVC = FollowLikeVC()
 //        followVC.viewingMode = FollowLikeVC.ViewingMode(index: 0)
-//        followVC.uid = user?.uid
+        followVC.uid = user?.uid
         navigationController?.pushViewController(followVC, animated: true)
     }
     
@@ -183,7 +174,7 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
             guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else { return }
             let uid = snapshot.key
             let user = User(uid: uid, dictionary: dictionary)
-            self.currentUser = user
+            self.user = user
             self.navigationItem.title = user.username
             self.collectionView?.reloadData()
         }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 private let reuseIdentifer = "FollowCell"
 
@@ -16,6 +17,8 @@ class FollowVC: UITableViewController {
     
     var viewFollowers = false
     var viewFollowing = false
+    var uid: String?
+    var users = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,16 @@ class FollowVC: UITableViewController {
             navigationItem.title = "Followers"
         } else {
             navigationItem.title = "Following"
+        }
+        
+        // clear separator lines
+        tableView.separatorColor = .clear
+        
+        // fetch users
+        fetchUsers()
+        
+        if let uid = self.uid {
+            print("User id is \(uid)")
         }
     }
 
@@ -42,14 +55,50 @@ class FollowVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return users.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifer, for: indexPath) as! FollowCell
 
+        cell.user = users[indexPath.row]
+        
         return cell
     }
 
+    func fetchUsers() {
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        var ref: DatabaseReference!
+        
+        if viewFollowers {
+            // fetch followers
+            ref = USER_FOLLOWER_REF
+        } else {
+            // fetch following users
+            ref = USER_FOLLOWING_REF
+        }
+        
+        ref.child(currentUid).observe(.childAdded) { (snapshot) in
+            print(snapshot)
+            
+            let userId = snapshot.key
+            
+            USER_REF.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else { return }
+                
+                let user = User(uid: userId, dictionary: dictionary)
+                
+                self.users.append(user)
+                
+                self.tableView.reloadData()
+                
+                print("User name is \(user.username)")
+            })
+
+        }
+        
+        
+    }
 
 }
