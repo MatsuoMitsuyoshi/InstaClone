@@ -119,9 +119,14 @@ class UploadPostVC: UIViewController, UITextViewDelegate {
             
                 // post id
                 let postId = POSTS_REF.childByAutoId()
+                guard let postKey = postId.key else { return }
             
                 // upload information to database
                 postId.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    
+                    // update user-post structure
+                    let userPostsRef = USER_POSTS_REF.child(currentUid)
+                    userPostsRef.updateChildValues([postKey: 1])
                     
                     // return to home feed
                     self.dismiss(animated: true, completion: {
