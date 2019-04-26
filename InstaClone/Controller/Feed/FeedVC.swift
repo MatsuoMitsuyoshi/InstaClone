@@ -15,6 +15,13 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     // MARK: - Properties
 
+    var posts = [Post]()
+//    var viewSinglePost = false
+//    var post: Post?
+//    var currentKey: String?
+//    var userProfileController: UserProfileVC?
+    
+    
     // MARK: - Init
 
     override func viewDidLoad() {
@@ -28,6 +35,9 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
         // configure logout button
         configureNavigationBar()
+        
+        // fetch posts
+        fetchPosts()
         
     }
 
@@ -51,11 +61,14 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return posts.count
     }
 
+    // Feed view profile image
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FeedCell
+        
+        cell.post = posts[indexPath.row]
         
         return cell
     }
@@ -107,5 +120,31 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
         
         present(alertController, animated: true, completion: nil)
 
+    }
+    
+    // MARK: - API
+    
+    func fetchPosts() {
+        
+        POSTS_REF.observe(.childAdded) { (snapshot) in
+            
+            let postId = snapshot.key
+            
+            guard let dictionary = snapshot.value as? Dictionary<String, AnyObject> else { return }
+            
+            let post = Post(postId: postId, dictionary: dictionary)
+            
+            self.posts = [Post(postId: postId, dictionary: dictionary)]
+            
+            self.posts.append(post)
+            
+            self.posts.sort(by: { (post1, post2) -> Bool in
+                return post1.creationDate > post2.creationDate
+            })
+            
+            print("Post caption is ", post.caption)
+            
+            self.collectionView?.reloadData()
+        }
     }
 }

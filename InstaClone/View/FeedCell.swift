@@ -7,10 +7,32 @@
 //
 
 import UIKit
+import Firebase
 
 class FeedCell: UICollectionViewCell {
 
     // MARK: - Properties
+
+    var post: Post? {
+        
+        didSet {
+
+            guard let ownerUid = post?.ownerUid else { return }
+            guard let imageUrl = post?.imageUrl else { return }
+            guard let likes = post?.likes else { return }
+            
+            Database.fetchUser(with: ownerUid) { (user) in
+                self.profileImageView.loadImage(with: user.profileImageUrl)
+                self.usernameButton.setTitle(user.username, for: .normal)
+                self.configurePostCaption(user: user)
+            }
+            postImageView.loadImage(with: imageUrl)
+
+            likesLabel.text = "\(likes) likes"
+//            configureLikeButton()
+//            configureCommentIndicatorView()
+        }
+    }
 
     let profileImageView: CustomImageView = {
         let iv = CustomImageView()
@@ -162,7 +184,17 @@ class FeedCell: UICollectionViewCell {
         postTimeLabel.anchor(top: captionLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
-    
+    func configurePostCaption(user: User) {
+        
+        guard let post = self.post else { return }
+        guard let caption = post.caption else { return }
+        
+        let attributedText = NSMutableAttributedString(string: user.username, attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)])
+        
+        attributedText.append(NSAttributedString(string: " \(caption)", attributes: [NSMutableAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]))
+        
+        captionLabel.attributedText = attributedText
+    }
     
     func configureActionButtons() {
       let stackView = UIStackView(arrangedSubviews: [likeButton, commentButton, messageButton])
