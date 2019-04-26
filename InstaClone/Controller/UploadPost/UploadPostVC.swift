@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class UploadPostVC: UIViewController {
+class UploadPostVC: UIViewController, UITextViewDelegate {
 
     // MARK: - Properties
     
@@ -35,6 +36,8 @@ class UploadPostVC: UIViewController {
         button.setTitle("Share", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(handleSharePost), for: .touchUpInside)
         return button
     }()
     
@@ -49,10 +52,85 @@ class UploadPostVC: UIViewController {
         // load image
         loadImage()
         
+        // text view delegate
+        captionTextView.delegate = self
+        
         view.backgroundColor = .white        
     }
+    
+    // MARK: - UITextView
+    
+    // Share button color change
+    func textViewDidChange(_ textView: UITextView) {
+        
+        guard !textView.text.isEmpty else {
+            
+            shareButton.isEnabled = false
+            shareButton.backgroundColor = UIColor(red: 149/255, green: 204/255, blue: 244/255, alpha: 1)
+            return
+        }
 
-    // MARK: -
+        shareButton.isEnabled = true
+        shareButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
+
+    }
+
+    // MARK: - Handlers
+    
+    @objc func handleSharePost() {
+        
+        // paramaters
+        guard
+            let caption = captionTextView.text,
+            let posting = photoImageView.image,
+            let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        // image upload data
+        guard let uploadData = posting.jpegData(compressionQuality: 0.5) else { return }
+        
+        // creation data
+        let creationDate = Int(NSDate().timeIntervalSince1970)
+        
+        // update storage
+        let filename = NSUUID().uuidString
+        
+        // UPDATE: - In order to get download URL must add filename to storage ref like this
+        let storageRef = Storage.storage().reference().child("post_images").child(filename)
+        storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+
+            // handle error
+            if let error = error {
+                print("Failed to upload image to storage with error", error.localizedDescription)
+                return
+            }
+            
+            // UPDATE: - Firebase 5 must now retrieve download url
+            // image url
+            storageRef.downloadURL(completion: { (url, error) in
+                guard let imageUrl = url?.absoluteString else { return }
+            
+                // post url
+                let values = [
+                    "caption": caption,
+                    "creatonDate": creationDate,
+                    "likes": 0,
+                    "imageUrl": imageUrl,
+                    "ownerUid": currentUid] as [String: Any]
+            
+                // post id
+                let postId = POSTS_REF.childByAutoId()
+            
+                // upload information to database
+                postId.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    
+                    // return to home feed
+                    self.dismiss(animated: true, completion: {
+                        self.tabBarController?.selectedIndex = 0
+                    })
+                })
+            })
+        })
+    }
 
     func configureViewComponents() {
         
