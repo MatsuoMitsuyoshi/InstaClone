@@ -112,7 +112,7 @@ class UploadPostVC: UIViewController, UITextViewDelegate {
                 // post url
                 let values = [
                     "caption": caption,
-                    "creatonDate": creationDate,
+                    "creationDate": creationDate,
                     "likes": 0,
                     "imageUrl": imageUrl,
                     "ownerUid": currentUid] as [String: Any]
