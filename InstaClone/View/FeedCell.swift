@@ -12,6 +12,8 @@ import Firebase
 class FeedCell: UICollectionViewCell {
 
     // MARK: - Properties
+    
+    var delegate: FeedCellDelegate?
 
     var post: Post? {
         
@@ -47,7 +49,7 @@ class FeedCell: UICollectionViewCell {
         button.setTitle("Username", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-//        button.addTarget(self, action: #selector(handleUsernameTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleUsernameTapped) , for: .touchUpInside)
         return button
     }()
     
@@ -56,7 +58,7 @@ class FeedCell: UICollectionViewCell {
         button.setTitle("•••", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-//        button.addTarget(self, action: #selector(handleOptionsTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleOptionsTapped) , for: .touchUpInside)
         return button
     }()
 
@@ -78,7 +80,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
         button.tintColor = .black
-//        button.addTarget(self, action: #selector(handleLikeTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLikeTapped) , for: .touchUpInside)
         return button
     }()
 
@@ -86,7 +88,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "comment"), for: .normal)
         button.tintColor = .black
-//        button.addTarget(self, action: #selector(handleCommentTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleCommentTapped) , for: .touchUpInside)
         return button
     }()
     
@@ -183,6 +185,32 @@ class FeedCell: UICollectionViewCell {
         addSubview(postTimeLabel)
         postTimeLabel.anchor(top: captionLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
+    
+    // MARK: - Handlers
+    
+    @objc func handleUsernameTapped() {
+        delegate?.handleUsernameTapped(for: self)
+    }
+    
+    @objc func handleOptionsTapped() {
+        delegate?.handleOptionsTapped(for: self)
+    }
+    
+    @objc func handleLikeTapped() {
+        delegate?.handleLikeTapped(for: self, isDoubleTap: false)
+    }
+    
+    @objc func handleCommentTapped() {
+        delegate?.handleCommentTapped(for: self)
+    }
+    
+//    @objc func handleShowLikes() {
+//        delegate?.handleShowLikes(for: self)
+//    }
+//
+//    @objc func handleDoubleTapToLike() {
+//        delegate?.handleLikeTapped(for: self, isDoubleTap: true)
+//    }
     
     func configurePostCaption(user: User) {
         
