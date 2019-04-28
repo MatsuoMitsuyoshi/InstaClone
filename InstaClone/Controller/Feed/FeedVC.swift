@@ -16,8 +16,8 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     // MARK: - Properties
 
     var posts = [Post]()
-//    var viewSinglePost = false
-//    var post: Post?
+    var viewSinglePost = false
+    var post: Post?
 //    var currentKey: String?
 //    var userProfileController: UserProfileVC?
     
@@ -37,8 +37,9 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         configureNavigationBar()
         
         // fetch posts
-        fetchPosts()
-        
+        if !viewSinglePost {
+            fetchPosts()
+        }
     }
 
     // MARK: - UICollectionViewFlowLayout
@@ -61,7 +62,12 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+
+        if viewSinglePost {
+            return 1
+        } else {
+            return posts.count
+        }
     }
 
     // Feed view profile image
@@ -70,11 +76,18 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         
         cell.delegate = self
         
-        cell.post = posts[indexPath.row]
+        var post: Post!
+
+        if viewSinglePost {
+            if let post = self.post {
+                cell.post = post
+            }
+        } else {
+            cell.post = posts[indexPath.row]
+        }
         
         return cell
     }
-
     // MARK: - FeedCellDelegate Protocol
 
     func handleUsernameTapped(for cell: FeedCell) {
@@ -110,7 +123,11 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     func configureNavigationBar() {
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        if !viewSinglePost {
+
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+
+        }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "send2"), style: .plain, target: self, action: #selector(handleShowMessages))
         
@@ -155,7 +172,9 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     func fetchPosts() {
         
-        POSTS_REF.observe(.childAdded) { (snapshot) in
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        USER_FEED_REF.child(currentUid).observe(.childAdded) { (snapshot) in
             
             let postId = snapshot.key
             

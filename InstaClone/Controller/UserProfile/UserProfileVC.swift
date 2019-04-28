@@ -87,12 +87,24 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         return header
     }
 
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! UserPostCell
         
         cell.post = posts[indexPath.item]
     
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let feedVC = FeedVC(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        feedVC.viewSinglePost = true
+        
+        feedVC.post = posts[indexPath.item]
+        
+        navigationController?.pushViewController(feedVC, animated: true)
     }
     
     // MARK: - UserProfileHeader Protocol
