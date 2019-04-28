@@ -57,6 +57,8 @@ class User {
             let postId = snapshot.key
             USER_FEED_REF.child(currentUid).updateChildValues([postId: 1])
         }
+        
+        
     }
 
     func unfollow() {
@@ -74,6 +76,7 @@ class User {
         // remove current user from user-follower structure
         USER_FOLLOWER_REF.child(uid).child(currentUid).removeValue()
 
+        // remove unfollowed users posts from current user
         USER_POSTS_REF.child(uid).observe(.childAdded) { (snapshot) in
             let postId = snapshot.key
             USER_FEED_REF.child(currentUid).child(postId).removeValue()
