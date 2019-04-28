@@ -96,6 +96,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         
         return cell
     }
+    
     // MARK: - FeedCellDelegate Protocol
 
     func handleUsernameTapped(for cell: FeedCell) {
@@ -115,7 +116,28 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     }
     
     func handleLikeTapped(for cell: FeedCell, isDoubleTap: Bool) {
-        print("handle like tapped")
+        
+        guard let post = cell.post else { return }
+        guard let postId = post.postId else { return }
+        
+        if post.didLike {
+            
+            post.adjustLikes(addLike: false, completion: { (likes) in
+                cell.likeButton.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
+                self.updateLikesStructures(with: postId, addLike: false)
+            })
+            
+        } else {
+            
+            post.adjustLikes(addLike: true, completion: { (likes) in
+                cell.likeButton.setImage(#imageLiteral(resourceName: "like_selected"), for: .normal)
+                self.updateLikesStructures(with: postId, addLike: true)
+            })
+        }
+        
+        guard let likes = post.likes else { return }
+        cell.likesLabel.text = "\(likes) likes"
+
     }
     
     func handleCommentTapped(for cell: FeedCell) {
@@ -134,6 +156,28 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     @objc func handleShowMessages() {
         print("Handle show messages")
+    }
+    
+    func updateLikesStructures(with postId: String, addLike: Bool) {
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        if addLike {
+            
+            // updates user-likes structure
+            USER_LIKES_REF.child(currentUid).updateChildValues([postId: 1])
+            
+            // updates post-likes structure
+            POST_LIKES_REF.child(postId).updateChildValues([currentUid: 1])
+
+        } else {
+            
+            // remove like from user-like structure
+            USER_LIKES_REF.child(currentUid).child(postId).removeValue()
+            
+            // remove like from post-like structure
+            POST_LIKES_REF.child(postId).child(postId).removeValue()
+        }
     }
     
     func configureNavigationBar() {
