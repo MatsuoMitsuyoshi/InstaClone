@@ -1,5 +1,5 @@
 //
-//  FollowCell.swift
+//  FollowLikeCell.swift
 //  InstaClone
 //
 //  Created by mitsuyoshi matsuo on 2019/04/22.
@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class FollowCell: UITableViewCell {
+class FollowLikeCell: UITableViewCell {
 
     // MARK: - Properties
 

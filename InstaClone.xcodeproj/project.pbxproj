@@ -30,8 +30,8 @@
 		0931B0152272F252003C7B42 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B0142272F252003C7B42 /* FeedCell.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
-		095276F4226DE43A00CF8727 /* FollowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowVC.swift */; };
-		095276F6226DE5CB00CF8727 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F5226DE5CB00CF8727 /* FollowCell.swift */; };
+		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
+		095276F6226DE5CB00CF8727 /* FollowLikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F5226DE5CB00CF8727 /* FollowLikeCell.swift */; };
 		095276F8226F0D0700CF8727 /* SelectImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F7226F0D0700CF8727 /* SelectImageVC.swift */; };
 		095276FA226F0E5F00CF8727 /* SelectPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F9226F0E5F00CF8727 /* SelectPhotoCell.swift */; };
 		095276FC226F0EA900CF8727 /* SelectPhotoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276FB226F0EA900CF8727 /* SelectPhotoHeader.swift */; };
@@ -64,8 +64,8 @@
 		0931B0142272F252003C7B42 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		095276F3226DE43A00CF8727 /* FollowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowVC.swift; sourceTree = "<group>"; };
-		095276F5226DE5CB00CF8727 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
+		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
+		095276F5226DE5CB00CF8727 /* FollowLikeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeCell.swift; sourceTree = "<group>"; };
 		095276F7226F0D0700CF8727 /* SelectImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageVC.swift; sourceTree = "<group>"; };
 		095276F9226F0E5F00CF8727 /* SelectPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoCell.swift; sourceTree = "<group>"; };
 		095276FB226F0EA900CF8727 /* SelectPhotoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoHeader.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			children = (
 				0906A79322687246006E4EA4 /* UserProfileHeader.swift */,
 				0906A797226C27D2006E4EA4 /* SearchUserCell.swift */,
-				095276F5226DE5CB00CF8727 /* FollowCell.swift */,
+				095276F5226DE5CB00CF8727 /* FollowLikeCell.swift */,
 				095276F9226F0E5F00CF8727 /* SelectPhotoCell.swift */,
 				095276FB226F0EA900CF8727 /* SelectPhotoHeader.swift */,
 				0931B0102272CE99003C7B42 /* UserPostCell.swift */,
@@ -215,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				0906A78722684538006E4EA4 /* UserProfileVC.swift */,
-				095276F3226DE43A00CF8727 /* FollowVC.swift */,
+				095276F3226DE43A00CF8727 /* FollowLikeVC.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -373,7 +373,7 @@
 				0906A7802268444B006E4EA4 /* SearchVC.swift in Sources */,
 				0906A786226844FA006E4EA4 /* NotificationsVC.swift in Sources */,
 				0906A784226844CF006E4EA4 /* UploadPostVC.swift in Sources */,
-				095276F4226DE43A00CF8727 /* FollowVC.swift in Sources */,
+				095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */,
 				095276FA226F0E5F00CF8727 /* SelectPhotoCell.swift in Sources */,
 				0906A798226C27D2006E4EA4 /* SearchUserCell.swift in Sources */,
 				0931B0112272CE99003C7B42 /* UserPostCell.swift in Sources */,
@@ -381,7 +381,7 @@
 				0906A78222684479006E4EA4 /* FeedVC.swift in Sources */,
 				0931B00F2272ABB1003C7B42 /* Post.swift in Sources */,
 				0906A7742267429D006E4EA4 /* SignUpVC.swift in Sources */,
-				095276F6226DE5CB00CF8727 /* FollowCell.swift in Sources */,
+				095276F6226DE5CB00CF8727 /* FollowLikeCell.swift in Sources */,
 				0906A76F2266DD1C006E4EA4 /* LoginVC.swift in Sources */,
 				0906A796226888E2006E4EA4 /* User.swift in Sources */,
 				0906A7722266E0A6006E4EA4 /* Extensions.swift in Sources */,
