@@ -48,13 +48,44 @@ class Post {
     
     func adjustLikes(addLike: Bool, completion: @escaping(Int) -> ()) {
         
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+
+        // UPDATE: Unwrap post id to work with firebase
+        guard let postId = self.postId else { return }
+        
         if addLike {
-            likes = likes + 1
-            didLike = true
+            
+            // updates user-likes structure
+            USER_LIKES_REF.child(currentUid).updateChildValues([postId: 1], withCompletionBlock: { (err, ref) in
+                
+                // updates post-likes structure
+                POST_LIKES_REF.child(self.postId).updateChildValues([currentUid: 1], withCompletionBlock: { (err, ref) in
+
+                    self.likes = self.likes + 1
+                    self.didLike = true
+                    POSTS_REF.child(self.postId).child("likes").setValue(self.likes)
+                    completion(self.likes)
+                })
+            })
+            
+
         } else {
-            guard likes > 0 else { return }
-            likes = likes - 1
-            didLike = false
+            
+            // remove like from user-like structure
+            USER_LIKES_REF.child(currentUid).child(postId).removeValue { (err, ref) in
+
+                // remove like from post-like structure
+                POST_LIKES_REF.child(self.postId).child(currentUid).removeValue(completionBlock: { (err, ref) in
+                    
+                    guard self.likes > 0 else { return }
+                    self.likes = self.likes - 1
+                    self.didLike = false
+                    POSTS_REF.child(self.postId).child("likes").setValue(self.likes)
+                    completion(self.likes)
+                })
+            }
+            
+
         }
         
         POSTS_REF.child(postId).child("likes").setValue(likes)

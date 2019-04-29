@@ -124,19 +124,21 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
             
             post.adjustLikes(addLike: false, completion: { (likes) in
                 cell.likeButton.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
-                self.updateLikesStructures(with: postId, addLike: false)
+                cell.likesLabel.text = "\(likes) likes"
+//                self.updateLikesStructures(with: postId, addLike: false)
             })
             
         } else {
             
             post.adjustLikes(addLike: true, completion: { (likes) in
                 cell.likeButton.setImage(#imageLiteral(resourceName: "like_selected"), for: .normal)
-                self.updateLikesStructures(with: postId, addLike: true)
+                cell.likesLabel.text = "\(likes) likes"
+//                self.updateLikesStructures(with: postId, addLike: true)
             })
         }
         
-        guard let likes = post.likes else { return }
-        cell.likesLabel.text = "\(likes) likes"
+//        guard let likes = post.likes else { return }
+//        cell.likesLabel.text = "\(likes) likes"
 
     }
     
@@ -164,19 +166,9 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         
         if addLike {
             
-            // updates user-likes structure
-            USER_LIKES_REF.child(currentUid).updateChildValues([postId: 1])
-            
-            // updates post-likes structure
-            POST_LIKES_REF.child(postId).updateChildValues([currentUid: 1])
 
         } else {
             
-            // remove like from user-like structure
-            USER_LIKES_REF.child(currentUid).child(postId).removeValue()
-            
-            // remove like from post-like structure
-            POST_LIKES_REF.child(postId).child(postId).removeValue()
         }
     }
     
