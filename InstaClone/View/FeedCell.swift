@@ -31,7 +31,7 @@ class FeedCell: UICollectionViewCell {
             postImageView.loadImage(with: imageUrl)
 
             likesLabel.text = "\(likes) likes"
-//            configureLikeButton()
+            configureLikeButton()
 //            configureCommentIndicatorView()
         }
     }
@@ -112,10 +112,10 @@ class FeedCell: UICollectionViewCell {
         label.text = "3 likes"
         
         // add gesture recognizer to label
-//        let likeTap = UITapGestureRecognizer(target: self, action: #selector(handleShowLikes))
-//        likeTap.numberOfTapsRequired = 1
-//        label.isUserInteractionEnabled = true
-//        label.addGestureRecognizer(likeTap)
+        let likeTap = UITapGestureRecognizer(target: self, action: #selector(handleShowLikes))
+        likeTap.numberOfTapsRequired = 1
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(likeTap)
         
         return label
     }()
@@ -204,13 +204,18 @@ class FeedCell: UICollectionViewCell {
         delegate?.handleCommentTapped(for: self)
     }
     
-//    @objc func handleShowLikes() {
-//        delegate?.handleShowLikes(for: self)
-//    }
-//
+    @objc func handleShowLikes() {
+        delegate?.handleShowLikes(for: self)
+    }
+
 //    @objc func handleDoubleTapToLike() {
 //        delegate?.handleLikeTapped(for: self, isDoubleTap: true)
 //    }
+    
+    func configureLikeButton() {
+        delegate?.handleConfigureLikeButton(for: self)
+        
+    }
     
     func configurePostCaption(user: User) {
         
