@@ -44,15 +44,12 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
         // register cell class
         tableView.register(FollowLikeCell.self, forCellReuseIdentifier: reuseIdentifer)
         
-        // configure nav controller
-        if let viewingMode = self.viewingMode {
 
-            // configure nav title
-            configureNavigationTitle(with: viewingMode)
-            
-            // fetch users
-            fetchUsers(by: self.viewingMode)
-        }
+        // configure nav titles
+        configureNavigationTitle()
+        
+        // fetch users
+        fetchUsers()
         
         // clear separator lines
         tableView.separatorColor = .clear
@@ -127,7 +124,9 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
 
     // MARK: - Handlers
     
-    func configureNavigationTitle(with viewingMode: ViewingMode) {
+    func configureNavigationTitle() {
+        guard let viewingMode = self.viewingMode else { return }
+        
         switch viewingMode {
         case .Followers: navigationItem.title = "Followers"
         case .Following: navigationItem.title = "Following"
@@ -148,11 +147,19 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
         case .Likes: return POST_LIKES_REF
         }
     }
+    
+    func fetchUser(with uid: String) {
+        Database.fetchUser(with: uid, completion: { (user) in
+            self.users.append(user)
+            self.tableView.reloadData()
+        })
 
-    func fetchUsers(by viewingMode: ViewingMode) {
-        
+    }
+    
+    func fetchUsers() {
         guard let ref = getDatabaseReference() else { return }
-        
+        guard let viewingMode = self.viewingMode else { return }
+
         switch viewingMode {
             
         case .Followers, .Following:
@@ -165,15 +172,8 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
                 guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
                 
                 allObjects.forEach({ (snapshot) in
-                    
-                    let userId = snapshot.key
-                    
-                    Database.fetchUser(with: userId, completion: { (user) in
-                        
-                        self.users.append(user)
-                        
-                        self.tableView.reloadData()
-                    })
+                    let uid = snapshot.key
+                    self.fetchUser(with: uid)
                 })
             }
 
@@ -184,13 +184,7 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
             ref.child(postId).observe(.childAdded, with: { (snapshot) in
                 
                 let uid = snapshot.key
-                
-                Database.fetchUser(with: uid, completion: { (user) in
-                    
-                    self.users.append(user)
-                    
-                    self.tableView.reloadData()
-                })
+                self.fetchUser(with: uid)
             })
         }
     }

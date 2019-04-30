@@ -100,15 +100,10 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     // MARK: - FeedCellDelegate Protocol
 
     func handleUsernameTapped(for cell: FeedCell) {
-        
         guard let post = cell.post else { return }
-        
         let userProfileVC = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
-        
         userProfileVC.user = post.user
-        
         navigationController?.pushViewController(userProfileVC, animated: true)
-        
     }
     
     func handleOptionsTapped(for cell: FeedCell) {
@@ -118,18 +113,18 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     func handleLikeTapped(for cell: FeedCell, isDoubleTap: Bool) {
         
         guard let post = cell.post else { return }
-        guard let postId = post.postId else { return }
         
         if post.didLike {
-            
-            post.adjustLikes(addLike: false, completion: { (likes) in
-                cell.likeButton.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
-                cell.likesLabel.text = "\(likes) likes"
-//                self.updateLikesStructures(with: postId, addLike: false)
-            })
-            
+            // handle unlike post
+            if !isDoubleTap {
+                post.adjustLikes(addLike: false, completion: { (likes) in
+                    cell.likeButton.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
+                    cell.likesLabel.text = "\(likes) likes"
+                    //                self.updateLikesStructures(with: postId, addLike: false)
+                })
+            }
         } else {
-            
+            // handle like post
             post.adjustLikes(addLike: true, completion: { (likes) in
                 cell.likeButton.setImage(#imageLiteral(resourceName: "like_selected"), for: .normal)
                 cell.likesLabel.text = "\(likes) likes"
@@ -153,13 +148,13 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     }
     
     func handleConfigureLikeButton(for cell: FeedCell) {
-        
         guard let post = cell.post else { return }
         guard let postId = post.postId else { return }
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
 
         USER_LIKES_REF.child(currentUid).observeSingleEvent(of: .value) { (snapshot) in
             
+            // check if post id exists in user-like structure
             if snapshot.hasChild(postId) {
                 post.didLike = true
                 cell.likeButton.setImage(#imageLiteral(resourceName: "like_selected"), for: .normal)

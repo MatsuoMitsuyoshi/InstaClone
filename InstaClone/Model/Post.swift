@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 class Post {
-    
+
     var caption: String!
     var likes: Int!
     var imageUrl: String!
