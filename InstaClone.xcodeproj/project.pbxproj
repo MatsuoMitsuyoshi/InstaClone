@@ -31,6 +31,7 @@
 		0931B0172277ED14003C7B42 /* CommentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B0162277ED14003C7B42 /* CommentVC.swift */; };
 		0931B0192277EEC8003C7B42 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B0182277EEC8003C7B42 /* CommentCell.swift */; };
 		0931B01B227820FA003C7B42 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B01A227820FA003C7B42 /* Comment.swift */; };
+		0931B01D22784C13003C7B42 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B01C22784C13003C7B42 /* NotificationCell.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
 		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
@@ -68,6 +69,7 @@
 		0931B0162277ED14003C7B42 /* CommentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentVC.swift; sourceTree = "<group>"; };
 		0931B0182277EEC8003C7B42 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		0931B01A227820FA003C7B42 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		0931B01C22784C13003C7B42 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				0931B0102272CE99003C7B42 /* UserPostCell.swift */,
 				0931B0142272F252003C7B42 /* FeedCell.swift */,
 				0931B0182277EEC8003C7B42 /* CommentCell.swift */,
+				0931B01C22784C13003C7B42 /* NotificationCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				0931B00F2272ABB1003C7B42 /* Post.swift in Sources */,
 				0906A7742267429D006E4EA4 /* SignUpVC.swift in Sources */,
 				095276F6226DE5CB00CF8727 /* FollowLikeCell.swift in Sources */,
+				0931B01D22784C13003C7B42 /* NotificationCell.swift in Sources */,
 				0906A76F2266DD1C006E4EA4 /* LoginVC.swift in Sources */,
 				0906A796226888E2006E4EA4 /* User.swift in Sources */,
 				0906A7722266E0A6006E4EA4 /* Extensions.swift in Sources */,
