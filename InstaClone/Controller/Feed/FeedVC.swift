@@ -163,9 +163,10 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     }
     
     func handleCommentTapped(for cell: FeedCell) {
-        print("handle comment tapped")
+        
+        let commentVC = CommentVC(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(commentVC, animated: true)
     }
-
     
     // MARK: - Handlers
     
@@ -178,18 +179,6 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     @objc func handleShowMessages() {
         print("Handle show messages")
-    }
-    
-    func updateLikesStructures(with postId: String, addLike: Bool) {
-        
-        guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        
-        if addLike {
-            
-
-        } else {
-            
-        }
     }
     
     func configureNavigationBar() {

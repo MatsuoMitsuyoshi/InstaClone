@@ -30,9 +30,7 @@ class UserProfileHeader: UICollectionViewCell {
             
             guard let profileImageUrl = user?.profileImageUrl else { return }
             
-            profileImageView.loadImage(with: profileImageUrl)
-            
-//            print("User Profie Header did set")
+            profileImageView.loadImage(with: profileImageUrl)            
         }
     }
     
