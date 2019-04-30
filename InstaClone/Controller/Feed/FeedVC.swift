@@ -120,7 +120,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
                 post.adjustLikes(addLike: false, completion: { (likes) in
                     cell.likeButton.setImage(#imageLiteral(resourceName: "like_unselected"), for: .normal)
                     cell.likesLabel.text = "\(likes) likes"
-                    //                self.updateLikesStructures(with: postId, addLike: false)
+//                    self.updateLikesStructures(with: postId, addLike: false)
                 })
             }
         } else {
@@ -128,7 +128,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
             post.adjustLikes(addLike: true, completion: { (likes) in
                 cell.likeButton.setImage(#imageLiteral(resourceName: "like_selected"), for: .normal)
                 cell.likesLabel.text = "\(likes) likes"
-//                self.updateLikesStructures(with: postId, addLike: true)
+                //                self.updateLikesStructures(with: postId, addLike: true)
             })
         }
         
