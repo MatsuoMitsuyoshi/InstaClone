@@ -15,17 +15,20 @@ class CommentVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
     
     // MARK: - Properties
     
+    var comments = [Comment]()
+    var postId: String?
+    
     lazy var containerView: UIView = {
         let containerView = UIView()
 //        containerView.backgroundColor = .red
         containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
         
-        containerView.addSubview(commentTextField)
-        commentTextField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
         containerView.addSubview(postButton)
-        postButton.anchor(top: nil, left: nil, bottom: nil, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        postButton.anchor(top: nil, left: nil, bottom: nil, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 50, height: 0)
         postButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+
+        containerView.addSubview(commentTextField)
+        commentTextField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: postButton.leftAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
         
         let separatorView = UIView()
         separatorView.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
@@ -49,6 +52,7 @@ class CommentVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         button.setTitle("Post", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleUploadComment), for: .touchUpInside)
         return button
     }()
 
@@ -90,9 +94,6 @@ class CommentVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
 
     // MARK: - UICollectionView
     
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 60)
     }
@@ -108,11 +109,21 @@ class CommentVC: UICollectionViewController, UICollectionViewDelegateFlowLayout 
         return cell
     }
 
+    // MARK: - Handlers
+    
+    @objc func handleUploadComment() {
 
-
-    // MARK: -
-
-
-
-
+        guard let postId = self.postId else { return }
+        guard let commentText = commentTextField.text else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let creationDate = Int(NSDate().timeIntervalSince1970)
+        
+        let values = [
+            "commentText": commentText,
+            "creationDate": creationDate,
+            "uid": uid
+        ] as [String : Any]
+        
+        COMMENT_REF.child(postId).childByAutoId().updateChildValues(values)
+    }
 }
