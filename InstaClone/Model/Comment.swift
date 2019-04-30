@@ -21,10 +21,7 @@ class Comment {
         self.user = user
         
         if let uid = dictionary["uid"] as? String {
-//            self.uid = uid
-            Database.fetchUser(with: uid) { (user) in
-                self.user = user
-            }
+            self.uid = uid
         }
         
         if let commentText = dictionary["commentText"] as? String {
