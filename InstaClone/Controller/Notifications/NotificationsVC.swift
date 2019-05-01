@@ -14,6 +14,8 @@ private let reuseIdentifier = "NotificationCell"
 class NotificationsVC: UITableViewController, NotificationCellDelegate {
 
     // MARK: - Properties
+    
+    var timer: Timer?
 
     var notifications = [Notification]()
     
@@ -74,19 +76,13 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
         
         if user.isFollowed {
             
+            // handle unfollow user
             user.unfollow()
-            cell.followButton.setTitle("Follow", for: .normal)
-            cell.followButton.setTitleColor(.white, for: .normal)
-            cell.followButton.layer.borderWidth = 0
-            cell.followButton.backgroundColor = UIColor(red: 17/255, green: 154/255, blue: 237/255, alpha: 1)
-
+            cell.followButton.configure(didFollow: false)
         } else {
+            // handle follow user
             user.follow()
-            cell.followButton.setTitle("Following", for: .normal)
-            cell.followButton.setTitleColor(.black, for: .normal)
-            cell.followButton.layer.borderWidth = 0.5
-            cell.followButton.layer.borderColor = UIColor.lightGray.cgColor
-            cell.followButton.backgroundColor = .white
+            cell.followButton.configure(didFollow: true)
         }
     }
     
@@ -100,11 +96,22 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
         navigationController?.pushViewController(feedController, animated: true)
     }
     
-
-    
     // MARK: - Handlers
+    
+    func handleReloadTable() {
+        self.timer?.invalidate()
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(handleSortNotifications), userInfo: nil, repeats: false)
+    }
 
     
+    
+    @objc func handleSortNotifications() {
+        self.notifications.sort { (notification1, notification2) -> Bool in
+            return notification1.creationDate > notification2.creationDate
+        }
+        self.tableView.reloadData()
+    }
     
     // MARK: - API
 
@@ -121,18 +128,16 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
                 
                 // if notification is for post
                 if let postId = dictionary["postId"] as? String {
-                    
                     Database.fetchPost(with: postId, completion: { (post) in
-                        
                         let notification = Notification(user: user, dictionary: dictionary)
                         self.notifications.append(notification)
-                        self.tableView.reloadData()
+                        self.handleReloadTable()
                     })
                     
                 } else {
                     let notification = Notification(user: user, dictionary: dictionary)
                     self.notifications.append(notification)
-                    self.tableView.reloadData()
+                    self.handleReloadTable()
                 }
             })
         }
