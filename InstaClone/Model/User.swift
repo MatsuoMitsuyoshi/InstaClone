@@ -35,6 +35,7 @@ class User {
     }
     
     func follow() {
+        
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
 
         // UPDATE: - get uid like this to work with update
@@ -106,10 +107,12 @@ class User {
         let creationDate = Int(NSDate().timeIntervalSince1970)
 
         // notification values
-        let values = ["checked": 0,
-                      "creationDate": creationDate,
-                      "uid": currentUid,
-                      "type": FOLLOW_INT_VALUE] as [String : Any]
+        let values = [
+            "checked": 0,
+            "creationDate": creationDate,
+            "uid": currentUid,
+            "type": FOLLOW_INT_VALUE
+        ] as [String : Any]
 
 
         NOTIFICATIONS_REF.child(self.uid).childByAutoId().updateChildValues(values)

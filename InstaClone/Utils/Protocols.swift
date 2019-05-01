@@ -29,3 +29,7 @@ protocol FeedCellDelegate {
     func handleShowLikes(for cell: FeedCell)
 //    func configureCommentIndicatorView(for cell: FeedCell)
 }
+
+protocol Printable {
+    var description: String { get }
+}
