@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 private let reuseIdentifier = "NotificationCell"
 
@@ -14,6 +15,7 @@ class NotificationsVC: UITableViewController {
 
     // MARK: - Properties
 
+    var notifications = [Notification]()
     
     // MARK: - Init
 
@@ -29,6 +31,9 @@ class NotificationsVC: UITableViewController {
         // register cell class
         tableView.register(NotificationCell.self, forCellReuseIdentifier: reuseIdentifier)
         
+        // fetch notifications
+        fetchNotifications()
+        
     }
 
     // MARK: - UITableView
@@ -39,12 +44,14 @@ class NotificationsVC: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return notifications.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationCell
-        
+
+        cell.notification = notifications[indexPath.row]
+
         return cell
     }
     
@@ -57,6 +64,35 @@ class NotificationsVC: UITableViewController {
     
     // MARK: - API
 
+    func fetchNotifications() {
+        
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        NOTIFICATIONS_REF.child(currentUid).observe(.childAdded) { (snapshot) in
+            
+            guard let dictionary  = snapshot.value as? Dictionary<String, AnyObject> else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            
+            Database.fetchUser(with: uid, completion: { (user) in
+                
+                // if notification is for post
+                if let postId = dictionary["postId"] as? String {
+                    
+                    Database.fetchPost(with: postId, completion: { (post) in
+                        
+                        let notification = Notification(user: user, dictionary: dictionary)
+                        self.notifications.append(notification)
+                        self.tableView.reloadData()
+                    })
+                    
+                } else {
+                    let notification = Notification(user: user, dictionary: dictionary)
+                    self.notifications.append(notification)
+                    self.tableView.reloadData()
+                }
+            })
+        }
+    }
     
 }
 
