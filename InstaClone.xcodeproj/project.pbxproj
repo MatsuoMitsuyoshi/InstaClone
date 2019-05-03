@@ -36,6 +36,8 @@
 		0931B021227BE6E9003C7B42 /* SearchPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B020227BE6E8003C7B42 /* SearchPostCell.swift */; };
 		0931B029227C0514003C7B42 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B028227C0514003C7B42 /* MessagesController.swift */; };
 		0931B02D227C0A0C003C7B42 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B02C227C0A0C003C7B42 /* MessageCell.swift */; };
+		0931B02F227C1834003C7B42 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B02E227C1834003C7B42 /* NewMessageController.swift */; };
+		0931B031227C1AF8003C7B42 /* NewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B030227C1AF8003C7B42 /* NewMessageCell.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
 		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
@@ -78,6 +80,8 @@
 		0931B020227BE6E8003C7B42 /* SearchPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostCell.swift; sourceTree = "<group>"; };
 		0931B028227C0514003C7B42 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		0931B02C227C0A0C003C7B42 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		0931B02E227C1834003C7B42 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
+		0931B030227C1AF8003C7B42 /* NewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageCell.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				0931B028227C0514003C7B42 /* MessagesController.swift */,
+				0931B02E227C1834003C7B42 /* NewMessageController.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				0931B02C227C0A0C003C7B42 /* MessageCell.swift */,
+				0931B030227C1AF8003C7B42 /* NewMessageCell.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -416,8 +422,10 @@
 				0906A7802268444B006E4EA4 /* SearchVC.swift in Sources */,
 				0906A786226844FA006E4EA4 /* NotificationsVC.swift in Sources */,
 				0931B021227BE6E9003C7B42 /* SearchPostCell.swift in Sources */,
+				0931B031227C1AF8003C7B42 /* NewMessageCell.swift in Sources */,
 				0906A784226844CF006E4EA4 /* UploadPostVC.swift in Sources */,
 				095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */,
+				0931B02F227C1834003C7B42 /* NewMessageController.swift in Sources */,
 				095276FA226F0E5F00CF8727 /* SelectPhotoCell.swift in Sources */,
 				0906A798226C27D2006E4EA4 /* SearchUserCell.swift in Sources */,
 				0931B0192277EEC8003C7B42 /* CommentCell.swift in Sources */,
