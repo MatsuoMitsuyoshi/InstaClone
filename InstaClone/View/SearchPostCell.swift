@@ -1,17 +1,17 @@
 //
-//  UserPostCell.swift
+//  SearchPostCell.swift
 //  InstaClone
 //
-//  Created by mitsuyoshi matsuo on 2019/04/26.
+//  Created by mitsuyoshi matsuo on 2019/05/03.
 //  Copyright © 2019 mitsuyoshi matsuo. All rights reserved.
 //
 
 import UIKit
 
-class UserPostCell: UICollectionViewCell {
+class SearchPostCell: UICollectionViewCell {
     
     // MARK: - Properties
-    
+
     var post: Post? {
         didSet {
             guard let imageUrl = post?.imageUrl else { return }
@@ -21,14 +21,16 @@ class UserPostCell: UICollectionViewCell {
     
     let postImageView: CustomImageView = {
         let iv = CustomImageView()
-        iv.contentMode = .scaleToFill
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
         return iv
     }()
+
+
     
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -39,4 +41,10 @@ class UserPostCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Handlers
+
+    
+    // MARK: - API
+
 }
