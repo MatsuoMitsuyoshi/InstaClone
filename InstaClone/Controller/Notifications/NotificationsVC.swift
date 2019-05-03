@@ -78,11 +78,11 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
             
             // handle unfollow user
             user.unfollow()
-            cell.followButton.configure(didFollow: false)
+//            cell.followButton.configure(didFollow: false)
         } else {
             // handle follow user
             user.follow()
-            cell.followButton.configure(didFollow: true)
+//            cell.followButton.configure(didFollow: true)
         }
     }
     
@@ -121,6 +121,7 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
         
         NOTIFICATIONS_REF.child(currentUid).observe(.childAdded) { (snapshot) in
             
+            let notificationId = snapshot.key
             guard let dictionary  = snapshot.value as? Dictionary<String, AnyObject> else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             
@@ -140,6 +141,7 @@ class NotificationsVC: UITableViewController, NotificationCellDelegate {
                     self.handleReloadTable()
                 }
             })
+            NOTIFICATIONS_REF.child(currentUid).child(notificationId).child("checked").setValue(1)
         }
     }
     

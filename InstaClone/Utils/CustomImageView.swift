@@ -23,15 +23,16 @@ class CustomImageView: UIImageView {
         lastImgUrlUsedToLoadImage = urlString
         
         // check if image exists in cache
-        if let cacheImage = imageCache[urlString] {
-            self.image = cacheImage
+        if let cachedImage = imageCache[urlString] {
+            self.image = cachedImage
             return
         }
         
         // url for image location
         guard let url = URL(string: urlString) else { return }
+        
         // fetch contents of URL
-        URLSession.shared.dataTask(with: url) { (data, response,error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             // handle error
             if let error = error {
@@ -57,7 +58,4 @@ class CustomImageView: UIImageView {
             }
             }.resume()
     }
-    
-    
-    
 }
