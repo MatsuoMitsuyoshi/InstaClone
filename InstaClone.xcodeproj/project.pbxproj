@@ -34,6 +34,8 @@
 		0931B01D22784C13003C7B42 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B01C22784C13003C7B42 /* NotificationCell.swift */; };
 		0931B01F22793DB2003C7B42 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B01E22793DB2003C7B42 /* Notification.swift */; };
 		0931B021227BE6E9003C7B42 /* SearchPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B020227BE6E8003C7B42 /* SearchPostCell.swift */; };
+		0931B029227C0514003C7B42 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B028227C0514003C7B42 /* MessagesController.swift */; };
+		0931B02D227C0A0C003C7B42 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B02C227C0A0C003C7B42 /* MessageCell.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
 		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
@@ -74,6 +76,8 @@
 		0931B01C22784C13003C7B42 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		0931B01E22793DB2003C7B42 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		0931B020227BE6E8003C7B42 /* SearchPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPostCell.swift; sourceTree = "<group>"; };
+		0931B028227C0514003C7B42 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
+		0931B02C227C0A0C003C7B42 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 		0906A76A2266DC3A006E4EA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0931B02B227C09D8003C7B42 /* Messages */,
 				0906A79322687246006E4EA4 /* UserProfileHeader.swift */,
 				0906A797226C27D2006E4EA4 /* SearchUserCell.swift */,
 				095276F5226DE5CB00CF8727 /* FollowLikeCell.swift */,
@@ -170,6 +175,7 @@
 				0906A78C226852D5006E4EA4 /* UploadPost */,
 				0906A78D226852E4006E4EA4 /* Notifications */,
 				0906A78E226852F3006E4EA4 /* UserProfile */,
+				0931B027227C0496003C7B42 /* Messages */,
 				0906A77922684065006E4EA4 /* MainTabVC.swift */,
 			);
 			path = Controller;
@@ -236,6 +242,22 @@
 				095276F3226DE43A00CF8727 /* FollowLikeVC.swift */,
 			);
 			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		0931B027227C0496003C7B42 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				0931B028227C0514003C7B42 /* MessagesController.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		0931B02B227C09D8003C7B42 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				0931B02C227C0A0C003C7B42 /* MessageCell.swift */,
+			);
+			path = Messages;
 			sourceTree = "<group>";
 		};
 		90F2C30ECA6A3699C247B51E /* Frameworks */ = {
@@ -387,7 +409,9 @@
 				0931B0132272E181003C7B42 /* CustomImageView.swift in Sources */,
 				095276F0226DBD6300CF8727 /* Protocols.swift in Sources */,
 				0906A79422687246006E4EA4 /* UserProfileHeader.swift in Sources */,
+				0931B02D227C0A0C003C7B42 /* MessageCell.swift in Sources */,
 				0931B0152272F252003C7B42 /* FeedCell.swift in Sources */,
+				0931B029227C0514003C7B42 /* MessagesController.swift in Sources */,
 				0931B0172277ED14003C7B42 /* CommentVC.swift in Sources */,
 				0906A7802268444B006E4EA4 /* SearchVC.swift in Sources */,
 				0906A786226844FA006E4EA4 /* NotificationsVC.swift in Sources */,
