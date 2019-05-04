@@ -89,14 +89,13 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-//        var height: CGFloat = 80
-//
-//        let message = messages[indexPath.item]
-//
-//        height = estimateFrameForText(message.messageText).height + 20
-//        return CGSize(width: view.frame.width, height: height)
+        var height: CGFloat = 80
 
-        return CGSize(width: view.frame.width, height: 50)
+        let message = messages[indexPath.item]
+        
+        height = estimateFrameForText(message.messageText).height + 20
+        
+        return CGSize(width: view.frame.width, height: height)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -106,6 +105,10 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ChatCell
         
+        cell.message = messages[indexPath.item]
+        
+        configureMessage(cell: cell , message: messages[indexPath.item])
+
         return cell
     }
 
@@ -118,7 +121,9 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
 
     @objc func handleInfoTapped() {
-        print("Handle info tapped")
+        let userProfileController = UserProfileVC(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileController.user = user
+        navigationController?.pushViewController(userProfileController, animated: true)
     }
     
     func estimateFrameForText(_ text: String) -> CGRect {
@@ -127,6 +132,26 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
         return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)], context: nil)
     }
 
+    func configureMessage(cell: ChatCell, message: Message) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        cell.bubbleWidthAnchor?.constant = estimateFrameForText(message.messageText).width + 32
+        cell.frame.size.height = estimateFrameForText(message.messageText).height + 20
+        if message.fromId == currentUid {
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
+            cell.bubbleView.backgroundColor = UIColor.rgb(red: 0, green: 137, blue: 249)
+            cell.textView.textColor = .white
+            cell.profileImageView.isHidden = true
+        } else {
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
+            cell.bubbleView.backgroundColor = UIColor.rgb(red: 240, green: 240, blue: 240)
+            cell.textView.textColor = .black
+            cell.profileImageView.isHidden = false
+        }
+    }
+    
     func configureNavigationBar() {
         guard let user = self.user else { return }
 
@@ -172,7 +197,7 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     // UPDATE: - Safely unwrapped uid to work with Firebase 5
         guard let uid = user.uid else { return }
         
-        var values: [String: AnyObject] = ["toId": user.uid as AnyObject, "fromId": currentUid as AnyObject, "creationDate": creationDate as AnyObject, "messateText": messageText as AnyObject, "read": false as AnyObject]
+        var values: [String: AnyObject] = ["toId": user.uid as AnyObject, "fromId": currentUid as AnyObject, "creationDate": creationDate as AnyObject, "messageText": messageText as AnyObject, "read": false as AnyObject]
         
 //        properties.forEach({values[$0] = $1})
         
