@@ -15,6 +15,7 @@ class Message {
     var fromId: String!
     var toId: String!
     var creationDate: Date!
+    var read: Bool!
     
     init(dictionary: Dictionary<String, AnyObject>) {
         
@@ -32,6 +33,10 @@ class Message {
 
         if let creationDate = dictionary["creationDate"] as? Double {
             self.creationDate = Date(timeIntervalSince1970: creationDate)
+        }
+        
+        if let read = dictionary["read"] as? Bool {
+            self.read = read
         }
     }
     

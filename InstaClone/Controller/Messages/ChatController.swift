@@ -89,13 +89,14 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var height: CGFloat = 80
-        
-        let message = messages[indexPath.item]
-        
-        height = estimateFrameForText(message.messageText).height + 20
-        
-        return CGSize(width: view.frame.width, height: height)
+//        var height: CGFloat = 80
+//
+//        let message = messages[indexPath.item]
+//
+//        height = estimateFrameForText(message.messageText).height + 20
+//        return CGSize(width: view.frame.width, height: height)
+
+        return CGSize(width: view.frame.width, height: 50)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -144,24 +145,46 @@ class ChatController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func uploadMessageToServer() {
 
         guard let messageText = messageTextField.text else { return }
+//        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+//        guard let user = self.user else { return }
+//        let createDate = Int(NSDate().timeIntervalSince1970)
+
+//        let messageValues = [
+//            "createDate": createDate,
+//            "fromId": currentUid,
+//            "toId": user.uid,
+//            "messateText": messageText
+//        ] as [String: Any]
+        
+//        let messageRef = MESSAGES_REF.childByAutoId()
+        
+//        messageRef.updateChildValues(messageValues)
+//
+//        USER_MESSAGES_REF.child(currentUid).child(user.uid).updateChildValues([messageRef.key: 1])
+//
+//        USER_MESSAGES_REF.child(user.uid).child(currentUid).updateChildValues([messageRef.key: 1])
+        
+//    func uploadMessageToServer(withProperties properties: [String: AnyObject]) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         guard let user = self.user else { return }
-        let createDate = Int(NSDate().timeIntervalSince1970)
-
-        let messageValues = [
-            "createDate": createDate,
-            "fromId": currentUid,
-            "toId": user.uid,
-            "messateText": messageText
-        ] as [String: Any]
+        let creationDate = Int(NSDate().timeIntervalSince1970)
+    
+    // UPDATE: - Safely unwrapped uid to work with Firebase 5
+        guard let uid = user.uid else { return }
+        
+        var values: [String: AnyObject] = ["toId": user.uid as AnyObject, "fromId": currentUid as AnyObject, "creationDate": creationDate as AnyObject, "messateText": messageText as AnyObject, "read": false as AnyObject]
+        
+//        properties.forEach({values[$0] = $1})
         
         let messageRef = MESSAGES_REF.childByAutoId()
         
-        messageRef.updateChildValues(messageValues)
-
-        USER_MESSAGES_REF.child(currentUid).child(user.uid).updateChildValues([messageRef.key: 1])
-
-        USER_MESSAGES_REF.child(user.uid).child(currentUid).updateChildValues([messageRef.key: 1])
+        // UPDATE: - Safely unwrapped messageKey to work with Firebase 5
+        guard let messageKey = messageRef.key else { return }
+        
+        messageRef.updateChildValues(values) { (err, ref) in
+            USER_MESSAGES_REF.child(currentUid).child(uid).updateChildValues([messageKey: 1])
+            USER_MESSAGES_REF.child(uid).child(currentUid).updateChildValues([messageKey: 1])
+        }
     }
     
     func observeMessages() {
