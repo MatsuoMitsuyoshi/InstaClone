@@ -12,14 +12,13 @@ import Firebase
 private let reuseIdentifier = "NewMessageCell"
 
 class NewMessageController: UITableViewController {
-
+    
     // MARK: - Properties
     
     var users = [User]()
     var messagesController: MessagesController?
     
     // MARK: - Init
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,9 +27,10 @@ class NewMessageController: UITableViewController {
         // register cell
         tableView.register(NewMessageCell.self, forCellReuseIdentifier: reuseIdentifier)
         
-        // fetch users
-        fetchUsers()
+        // removes separator views from unused rows
+//        tableView.tableFooterView = UIView(frame: .zero)
         
+        fetchUsers()
     }
     
     // MARK: - UITableView
@@ -61,14 +61,14 @@ class NewMessageController: UITableViewController {
     
     // MARK: - Handlers
     
-    @objc func HandleCancel() {
+    @objc func handleCancel() {
         dismiss(animated: true, completion: nil)
     }
     
     func configureNavigationBar() {
         navigationItem.title = "New Message"
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(HandleCancel))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
         navigationItem.leftBarButtonItem?.tintColor = .black
     }
 
@@ -83,9 +83,7 @@ class NewMessageController: UITableViewController {
                     self.users.append(user)
                     self.tableView.reloadData()
                 })
-                
             }
-            
         }
     }
 }
