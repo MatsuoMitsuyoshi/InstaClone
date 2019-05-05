@@ -41,6 +41,8 @@
 		0931B033227C2A46003C7B42 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B032227C2A46003C7B42 /* Message.swift */; };
 		0931B037227C2D2F003C7B42 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B036227C2D2F003C7B42 /* ChatController.swift */; };
 		0931B039227C2EF9003C7B42 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B038227C2EF9003C7B42 /* ChatCell.swift */; };
+		0931B03B227EA093003C7B42 /* HashtagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B03A227EA093003C7B42 /* HashtagController.swift */; };
+		0931B03D227EA3B3003C7B42 /* HashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B03C227EA3B3003C7B42 /* HashtagCell.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
 		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
@@ -88,6 +90,8 @@
 		0931B032227C2A46003C7B42 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0931B036227C2D2F003C7B42 /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		0931B038227C2EF9003C7B42 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		0931B03A227EA093003C7B42 /* HashtagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagController.swift; sourceTree = "<group>"; };
+		0931B03C227EA3B3003C7B42 /* HashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagCell.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 				0931B0182277EEC8003C7B42 /* CommentCell.swift */,
 				0931B01C22784C13003C7B42 /* NotificationCell.swift */,
 				0931B020227BE6E8003C7B42 /* SearchPostCell.swift */,
+				0931B03C227EA3B3003C7B42 /* HashtagCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -217,6 +222,7 @@
 			children = (
 				0906A78122684479006E4EA4 /* FeedVC.swift */,
 				0931B0162277ED14003C7B42 /* CommentVC.swift */,
+				0931B03A227EA093003C7B42 /* HashtagController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -438,6 +444,7 @@
 				095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */,
 				0931B02F227C1834003C7B42 /* NewMessageController.swift in Sources */,
 				095276FA226F0E5F00CF8727 /* SelectPhotoCell.swift in Sources */,
+				0931B03D227EA3B3003C7B42 /* HashtagCell.swift in Sources */,
 				0906A798226C27D2006E4EA4 /* SearchUserCell.swift in Sources */,
 				0931B0192277EEC8003C7B42 /* CommentCell.swift in Sources */,
 				0931B0112272CE99003C7B42 /* UserPostCell.swift in Sources */,
@@ -457,6 +464,7 @@
 				0906A77A22684065006E4EA4 /* MainTabVC.swift in Sources */,
 				0931B01B227820FA003C7B42 /* Comment.swift in Sources */,
 				0906A7592266DB79006E4EA4 /* AppDelegate.swift in Sources */,
+				0931B03B227EA093003C7B42 /* HashtagController.swift in Sources */,
 				0931B037227C2D2F003C7B42 /* ChatController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

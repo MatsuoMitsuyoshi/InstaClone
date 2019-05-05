@@ -149,22 +149,15 @@ class SearchVC: UITableViewController, UISearchBarDelegate, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchPostCell", for: indexPath) as! SearchPostCell
-        
         cell.post = posts[indexPath.item]
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let feedVC = FeedVC(collectionViewLayout: UICollectionViewFlowLayout())
-        
         feedVC.viewSinglePost = true
-        
         feedVC.post = posts[indexPath.item]
-        
         navigationController?.pushViewController(feedVC, animated: true)
-
     }
 
     

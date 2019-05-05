@@ -1,14 +1,14 @@
 //
-//  SearchPostCell.swift
+//  HashtagCell.swift
 //  InstaClone
 //
-//  Created by mitsuyoshi matsuo on 2019/05/03.
+//  Created by mitsuyoshi matsuo on 2019/05/05.
 //  Copyright © 2019 mitsuyoshi matsuo. All rights reserved.
 //
 
 import UIKit
 
-class SearchPostCell: UICollectionViewCell {
+class HashtagCell: UICollectionViewCell {
     
     // MARK: - Properties
 
@@ -28,7 +28,6 @@ class SearchPostCell: UICollectionViewCell {
     }()
 
 
-    
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -40,5 +39,5 @@ class SearchPostCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }    
+    }
 }

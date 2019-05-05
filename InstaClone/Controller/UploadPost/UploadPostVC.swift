@@ -97,51 +97,54 @@ class UploadPostVC: UIViewController, UITextViewDelegate {
     
     @objc func handleSharePost() {
         
+        
         // paramaters
         guard
             let caption = captionTextView.text,
-            let posting = photoImageView.image,
+            let postImg = photoImageView.image,
             let currentUid = Auth.auth().currentUser?.uid else { return }
-        
+
         // image upload data
-        guard let uploadData = posting.jpegData(compressionQuality: 0.5) else { return }
+        guard let uploadData = postImg.jpegData(compressionQuality: 0.5) else { return }
         
-        // creation data
+        // creation date
         let creationDate = Int(NSDate().timeIntervalSince1970)
         
         // update storage
         let filename = NSUUID().uuidString
         
         // UPDATE: - In order to get download URL must add filename to storage ref like this
-        let storageRef = Storage.storage().reference().child("post_images").child(filename)
-        storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-
+        let storageRef = STORAGE_POST_IMAGES_REF.child(filename)
+        storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+        
             // handle error
             if let error = error {
                 print("Failed to upload image to storage with error", error.localizedDescription)
                 return
             }
-            
+
             // UPDATE: - Firebase 5 must now retrieve download url
             // image url
             storageRef.downloadURL(completion: { (url, error) in
                 guard let imageUrl = url?.absoluteString else { return }
-            
-                // post url
+                
+                // post data
                 let values = [
                     "caption": caption,
                     "creationDate": creationDate,
                     "likes": 0,
                     "imageUrl": imageUrl,
-                    "ownerUid": currentUid] as [String: Any]
-            
+                    "ownerUid": currentUid
+                ] as [String: Any]
+                
                 // post id
                 let postId = POSTS_REF.childByAutoId()
                 guard let postKey = postId.key else { return }
-            
+                
                 // upload information to database
                 postId.updateChildValues(values, withCompletionBlock: { (err, ref) in
                     
+                    //Firebase5 update
                     // update user-post structure
                     let userPostsRef = USER_POSTS_REF.child(currentUid)
                     userPostsRef.updateChildValues([postKey: 1])
@@ -150,7 +153,14 @@ class UploadPostVC: UIViewController, UITextViewDelegate {
                     self.updateUserFeeds(with: postKey)
                     
                     // upload hashtag to server
-                    self.uploadHashtagToServer(withPostId: postId.key!)
+                    if caption.contains("#") {
+                        self.uploadHashtagToServer(withPostId: postKey)
+                    }
+                    
+//                    // upload mention notification to server
+//                    if caption.contains("@") {
+//                        self.uploadMentionNotification(forPostId: postKey, withText: caption, isForComment: false)
+//                    }
                     
                     // return to home feed
                     self.dismiss(animated: true, completion: {
@@ -158,7 +168,7 @@ class UploadPostVC: UIViewController, UITextViewDelegate {
                     })
                 })
             })
-        })
+        }
     }
 
     func configureViewComponents() {
