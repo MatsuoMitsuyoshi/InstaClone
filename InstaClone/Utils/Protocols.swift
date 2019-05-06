@@ -35,6 +35,10 @@ protocol NotificationCellDelegate {
     func handlePostTapped(for cell: NotificationCell)
 }
 
+protocol CommentInputAccesoryViewDelegate {
+    func didSubmit(forComment comment: String)
+}
+
 protocol Printable {
     var description: String { get }
 }

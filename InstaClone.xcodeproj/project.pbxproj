@@ -44,6 +44,8 @@
 		0931B03B227EA093003C7B42 /* HashtagController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B03A227EA093003C7B42 /* HashtagController.swift */; };
 		0931B03D227EA3B3003C7B42 /* HashtagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B03C227EA3B3003C7B42 /* HashtagCell.swift */; };
 		0931B03F2280343E003C7B42 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B03E2280343E003C7B42 /* EditProfileController.swift */; };
+		0931B04422805561003C7B42 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B04322805561003C7B42 /* InputTextView.swift */; };
+		0931B0462280562C003C7B42 /* CommentInputAccesoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931B0452280562C003C7B42 /* CommentInputAccesoryView.swift */; };
 		095276EE226DACE400CF8727 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276ED226DACE400CF8727 /* Constants.swift */; };
 		095276F0226DBD6300CF8727 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276EF226DBD6300CF8727 /* Protocols.swift */; };
 		095276F4226DE43A00CF8727 /* FollowLikeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095276F3226DE43A00CF8727 /* FollowLikeVC.swift */; };
@@ -94,6 +96,8 @@
 		0931B03A227EA093003C7B42 /* HashtagController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagController.swift; sourceTree = "<group>"; };
 		0931B03C227EA3B3003C7B42 /* HashtagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashtagCell.swift; sourceTree = "<group>"; };
 		0931B03E2280343E003C7B42 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
+		0931B04322805561003C7B42 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		0931B0452280562C003C7B42 /* CommentInputAccesoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentInputAccesoryView.swift; sourceTree = "<group>"; };
 		095276ED226DACE400CF8727 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		095276EF226DBD6300CF8727 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		095276F3226DE43A00CF8727 /* FollowLikeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowLikeVC.swift; sourceTree = "<group>"; };
@@ -222,8 +226,8 @@
 		0906A78A226852C0006E4EA4 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				0931B040228054AC003C7B42 /* Comments */,
 				0906A78122684479006E4EA4 /* FeedVC.swift */,
-				0931B0162277ED14003C7B42 /* CommentVC.swift */,
 				0931B03A227EA093003C7B42 /* HashtagController.swift */,
 			);
 			path = Feed;
@@ -282,6 +286,16 @@
 				0931B038227C2EF9003C7B42 /* ChatCell.swift */,
 			);
 			path = Messages;
+			sourceTree = "<group>";
+		};
+		0931B040228054AC003C7B42 /* Comments */ = {
+			isa = PBXGroup;
+			children = (
+				0931B0162277ED14003C7B42 /* CommentVC.swift */,
+				0931B04322805561003C7B42 /* InputTextView.swift */,
+				0931B0452280562C003C7B42 /* CommentInputAccesoryView.swift */,
+			);
+			path = Comments;
 			sourceTree = "<group>";
 		};
 		90F2C30ECA6A3699C247B51E /* Frameworks */ = {
@@ -456,6 +470,7 @@
 				0906A78222684479006E4EA4 /* FeedVC.swift in Sources */,
 				0931B00F2272ABB1003C7B42 /* Post.swift in Sources */,
 				0906A7742267429D006E4EA4 /* SignUpVC.swift in Sources */,
+				0931B0462280562C003C7B42 /* CommentInputAccesoryView.swift in Sources */,
 				095276F6226DE5CB00CF8727 /* FollowLikeCell.swift in Sources */,
 				0931B01D22784C13003C7B42 /* NotificationCell.swift in Sources */,
 				0931B01F22793DB2003C7B42 /* Notification.swift in Sources */,
@@ -466,6 +481,7 @@
 				0906A7722266E0A6006E4EA4 /* Extensions.swift in Sources */,
 				095276EE226DACE400CF8727 /* Constants.swift in Sources */,
 				0906A77A22684065006E4EA4 /* MainTabVC.swift in Sources */,
+				0931B04422805561003C7B42 /* InputTextView.swift in Sources */,
 				0931B01B227820FA003C7B42 /* Comment.swift in Sources */,
 				0906A7592266DB79006E4EA4 /* AppDelegate.swift in Sources */,
 				0931B03B227EA093003C7B42 /* HashtagController.swift in Sources */,
