@@ -14,6 +14,10 @@ private let reuseIdentifer = "FollowCell"
 class FollowLikeVC: UITableViewController, FollowCellDelegate {
 
     // MARK: - Properties
+
+    var followCurrentKey: String?
+    var likeCurrentKey: String?
+
     
     enum ViewingMode: Int {
         
@@ -37,6 +41,8 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
     var viewingMode: ViewingMode!
     var uid: String?
     var users = [User]()
+    
+    // MARK: - Init
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +69,15 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    // pagenation
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if users.count > 3 {
+            if indexPath.item == users.count - 1 {
+                fetchUsers()
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,7 +163,7 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
         }
     }
     
-    func fetchUser(with uid: String) {
+    func fetchUser(withUid uid: String) {
         Database.fetchUser(with: uid, completion: { (user) in
             self.users.append(user)
             self.tableView.reloadData()
@@ -165,27 +180,70 @@ class FollowLikeVC: UITableViewController, FollowCellDelegate {
         case .Followers, .Following:
 
             guard let uid = self.uid else { return }
+            
+            if followCurrentKey == nil {
+                ref.child(uid).queryLimited(toLast: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
+                    guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
 
-            // Follow/Following
-            ref.child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                    allObjects.forEach({ (snapshot) in
+                        let followUid = snapshot.key
+                        self.fetchUser(withUid: followUid)
+                    })
+                    self.followCurrentKey = first.key
+                })
+            } else {
                 
-                guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
-                
-                allObjects.forEach({ (snapshot) in
-                    let uid = snapshot.key
-                    self.fetchUser(with: uid)
+                ref.child(uid).queryOrderedByKey().queryEnding(atValue: self.followCurrentKey).queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
+
+                    guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
+                    guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+
+                    allObjects.forEach({ (snapshot) in
+                        let followUid = snapshot.key
+
+                        if followUid != self.followCurrentKey {
+                            self.fetchUser(withUid: followUid)
+                        }
+                    })
+                    self.followCurrentKey = first.key
                 })
             }
-
+            
         case .Likes:
         
             guard let postId = self.postId else { return }
         
-            ref.child(postId).observe(.childAdded, with: { (snapshot) in
+            if likeCurrentKey == nil {
+                ref.child(postId).queryLimited(toLast: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
+                    guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+
+                    allObjects.forEach({ (snapshot) in
+                        let likeUid = snapshot.key
+                        self.fetchUser(withUid: likeUid)
+                    })
+                    self.likeCurrentKey = first.key
+                })
                 
-                let uid = snapshot.key
-                self.fetchUser(with: uid)
-            })
+            } else {
+                ref.child(postId).queryOrderedByKey().queryEnding(atValue: self.likeCurrentKey).queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
+
+                    guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
+                    guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
+
+                    allObjects.forEach({ (snapshot) in
+                        let likeUid = snapshot.key
+
+                        if likeUid != self.likeCurrentKey {
+                            self.fetchUser(withUid: likeUid)
+                        }
+                    })
+                    self.likeCurrentKey = first.key
+                })
+            }
         }
     }
 }

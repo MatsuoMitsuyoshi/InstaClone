@@ -94,20 +94,16 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         
         cell.delegate = self
         
-        var post: Post!
-
         if viewSinglePost {
             if let post = self.post {
                 cell.post = post
             }
         } else {
-            cell.post = posts[indexPath.row]
+            cell.post = posts[indexPath.item]
         }
         
         handleHashtagTapped(forCell: cell)
-        
         handleMentionTapped(forCell: cell)
-        
         handleUsernameLabelTapped(forCell: cell)
         
         return cell
