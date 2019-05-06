@@ -20,8 +20,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     var viewSinglePost = false
     var post: Post?
     var currentKey: String?
-//    var userProfileController: UserProfileVC?
-    
+    var userProfileController: UserProfileVC?
     
     // MARK: - Init
 
@@ -132,21 +131,20 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
                 if !self.viewSinglePost {
                     self.handleRefresh()
                 } else {
-//                    if let userProfileController = self.userProfileController {
-                        _ = self.navigationController?.popViewController(animated: true)
-//                        userProfileController.handleRefresh()
-//                    }
+                    if let userProfileController = self.userProfileController {
+                            _ = self.navigationController?.popViewController(animated: true)
+                        userProfileController.handleRefresh()
+                    }
                 }
             }))
             
             alertController.addAction(UIAlertAction(title: "Edit Post", style: .default, handler: { (_) in
-                print("Handle edit post..")
                 
-//                let uploadPostController = UploadPostVC()
-//                let navigationController = UINavigationController(rootViewController: uploadPostController)
-//                uploadPostController.postToEdit = post
-//                uploadPostController.uploadAction = UploadPostVC.UploadAction(index: 1)
-//                self.present(navigationController, animated: true, completion: nil)
+                let uploadPostController = UploadPostVC()
+                let navigationController = UINavigationController(rootViewController: uploadPostController)
+                uploadPostController.postToEdit = post
+                uploadPostController.uploadAction = UploadPostVC.UploadAction(index: 1)
+                self.present(navigationController, animated: true, completion: nil)
             }))
             
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

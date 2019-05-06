@@ -131,6 +131,7 @@ class SelectImageVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     @objc func handleNext() {
         let uploadPostVC = UploadPostVC()
         uploadPostVC.selectedImage = header?.photoImageView.image
+        uploadPostVC.uploadAction = UploadPostVC.UploadAction(index: 0)
         navigationController?.pushViewController(uploadPostVC, animated: true)
     }
     
@@ -164,17 +165,12 @@ class SelectImageVC: UICollectionViewController, UICollectionViewDelegateFlowLay
         
         let allPhotos = PHAsset.fetchAssets(with: .image, options: getAssetFetchOptions())
 
-//        print("Function running")
-        
-
         // fetch images on background thread
         DispatchQueue.global(qos: .background).async {
             
             // enumerate objects
             allPhotos.enumerateObjects({ (asset, count, stop) in
 
-//                print("Count is \(count)")
-                
                 let imageManager = PHImageManager.default()
                 let targetSize = CGSize(width: 200, height: 200)
                 let options = PHImageRequestOptions()
@@ -204,19 +200,11 @@ class SelectImageVC: UICollectionViewController, UICollectionViewDelegateFlowLay
                                 self.collectionView?.reloadData()
                             }
                         }
-                        
                     }
                 })
-                
             })
         }
-    
     }
-
-    // MARK: -
-
-
-
 }
 
 

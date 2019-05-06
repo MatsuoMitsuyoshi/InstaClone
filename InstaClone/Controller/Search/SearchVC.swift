@@ -45,6 +45,9 @@ class SearchVC: UITableViewController, UISearchBarDelegate, UICollectionViewDele
         // configure collection view
         configureCollectionView()
         
+        // configure refresh control
+        configureRefreshControl()
+
         // fetch users
         fetchPosts()
     }
@@ -230,7 +233,18 @@ class SearchVC: UITableViewController, UISearchBarDelegate, UICollectionViewDele
         tableView.reloadData()
     }
 
+    @objc func handleRefresh() {
+        posts.removeAll(keepingCapacity: false)
+        self.currentKey = nil
+        fetchPosts()
+        collectionView?.reloadData()
+    }
     
+    func configureRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        self.tableView?.refreshControl = refreshControl
+    }
 
     // MARK: - API
     
@@ -241,6 +255,7 @@ class SearchVC: UITableViewController, UISearchBarDelegate, UICollectionViewDele
             
             // inital data pull
             USER_REF.queryLimited(toLast: 4).observeSingleEvent(of: .value) { (snapshot) in
+                self.tableView.refreshControl?.endRefreshing()
                 
                 guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
                 guard let allObjects = snapshot.children.allObjects as? [DataSnapshot] else { return }
