@@ -65,6 +65,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     // MARK: - UICollectionViewDataSource
     
+    // pagenation
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if posts.count > 4 {
             if indexPath.item == posts.count - 1 {
@@ -188,7 +189,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     
     @objc func handleRefresh() {
         posts.removeAll(keepingCapacity: false)
-//        self.currentKey = nil
+        self.currentKey = nil
         fetchPosts()
         collectionView?.reloadData()
     }
@@ -304,7 +305,8 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         
         if currentKey == nil {
             
-            // first 5 pages data
+            // pagenation
+            // initial data pull - first 5 data
             USER_FEED_REF.child(currentUid).queryLimited(toLast: 5).observeSingleEvent(of: .value, with: { (snapshot) in
                 self.collectionView?.refreshControl?.endRefreshing()
                 
@@ -319,7 +321,7 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
             })
         } else {
             
-            // next 5 pages data
+            // next 5 data
             USER_FEED_REF.child(currentUid).queryOrderedByKey().queryEnding(atValue: self.currentKey).queryLimited(toLast: 6).observeSingleEvent(of: .value, with: { (snapshot) in
 
                 guard let first = snapshot.children.allObjects.first as? DataSnapshot else { return }
