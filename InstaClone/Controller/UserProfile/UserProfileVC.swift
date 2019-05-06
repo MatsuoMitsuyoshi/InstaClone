@@ -144,12 +144,14 @@ class UserProfileVC: UICollectionViewController, UICollectionViewDelegateFlowLay
     
     func handleEditFollowTapped(for header: UserProfileHeader) {
         
-//        print("Handle edit follow tapped..")
-        
         guard let user = header.user else { return }
 
         if header.editProfileFollowButton.titleLabel?.text == "Edit Profile" {
-            print("Handle edit profile")
+            
+            let editProfileController = EditProfileController()
+            let navigationController = UINavigationController(rootViewController: editProfileController)
+            present(navigationController, animated: true, completion: nil)
+            
         } else {
 
             if header.editProfileFollowButton.titleLabel?.text == "Follow" {
