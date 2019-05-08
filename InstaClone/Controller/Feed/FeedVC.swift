@@ -22,6 +22,11 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     var currentKey: String?
     var userProfileController: UserProfileVC?
     
+//    var messageNotificationView: MessageNotificationView = {
+//        let view = MessageNotificationView()
+//        return view
+//    }()
+    
     // MARK: - Init
 
     override func viewDidLoad() {
@@ -33,13 +38,17 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
         // Register cell classes
         self.collectionView!.register(FeedCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        // configure logout button
-        configureNavigationBar()
         
         // configure refresh control
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         collectionView?.refreshControl = refreshControl
+
+        // configure logout button
+        configureNavigationBar()
+
+        // set user fcm token
+        setUserFCMToken()
         
         // fetch posts
         if !viewSinglePost {
@@ -302,6 +311,15 @@ class FeedVC: UICollectionViewController, UICollectionViewDelegateFlowLayout, Fe
     }
     
     // MARK: - API
+    
+    func setUserFCMToken() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        guard let fcmToken = Messaging.messaging().fcmToken else { return }
+        
+        let values = ["fcmToken": fcmToken]
+        
+        USER_REF.child(currentUid).updateChildValues(values)
+    }
     
     func updateUserFeeds() {
         

@@ -189,8 +189,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
 
                     // user id
                     guard let uid = authResult?.user.uid else { return }
+                    guard let fcmToken = Messaging.messaging().fcmToken else { return }
 
                     let dictionaryValues = ["name": fullName,
+                                            "fcmToken": fcmToken,
                                             "username": username,
                                             "profileImageUrl": profileImageURL]
 
