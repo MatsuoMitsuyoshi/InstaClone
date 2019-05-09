@@ -156,7 +156,7 @@ exports.observeMessages = functions.database.ref('/user-message-notifications/{u
 
 //     var user = snapshot.val();
 
-//     console.log("Username is " + user.username );
+//     console.log("Username is " + user.username);
 
 //     var payload = {
 //       notification: {
